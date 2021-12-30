@@ -1,0 +1,52 @@
+
+
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,700">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='CSS/styles.css') }}">
+{% endblock %}
+
+{% block title %}My Top 10 Movies{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 class="heading">My Top 10 Movies</h1>
+  <p class="description">These are my all time favourite movies.</p>
+    {% if list_len != 0 %}
+      {% for record in range(0,list_len) %}
+          <div class="card" >
+            <div class="front" style="background-image: url({{ movies[record].img_url }});">
+                <p class="large">{{ list_len - record }}</p>
+            </div>
+            <div class="back">
+              <div>
+            <div class="title">{{ movies[record].title }} <span class="release_date">{{ record.year }}</span></div>
+                <div class="rating">
+                    <label>{{ movies[record].rating }}</label>
+                  <i class="fas fa-star star"></i>
+                </div>
+                  <p class="review">{{ movies[record].review }}</p>
+                <p class="overview">
+                    {{ movies[record].description }}
+                </p>
+
+                <a href="/update/{{ movies[record].id }}" class="btn btn-primary">Update</a>
+                <a href="/delete/{{ movies[record].id }}" class="btn delete-btn">Delete</a>
+
+              </div>
+            </div>
+          </div>
+      {% endfor %}
+    {% endif %}
+
+</div>
+<div class="container text-center add">
+<a href="{{ url_for('add_movie') }}" class="button">Add Movie</a>
+</div>
+
+{% endblock %}
